@@ -1,44 +1,64 @@
-# Employee Attrition Prediction
+# 📊 Employee Attrition Predictor
 
-A machine learning system that predicts whether an employee is likely to leave a company, and explains *why* using feature importance analysis.
+A machine learning model that predicts whether an employee is likely to leave a company, and explains *why* — turning a black-box prediction into an actionable HR insight.
+
+🔗 **Live App:** https://employee-attrition-prediction-rjujkpsmfnzjw6vburaa8e.streamlit.app
 
 ## Overview
-This project uses classic ML algorithms (Logistic Regression and Random Forest) trained on employee HR data to predict attrition risk. Unlike a black-box prediction, this model also shows which factors matter most — helping HR teams take real, actionable retention steps.
+This project uses classic ML algorithms (Logistic Regression and Random Forest) trained on employee HR data to predict attrition risk. Built with Streamlit for a clean, interactive interface — no technical setup needed to try it out.
 
-## Key Features
-- Compares Logistic Regression vs Random Forest with hyperparameter tuning
-- Handles class imbalance using `class_weight="balanced"`
-- **Feature importance visualization** — shows the top reasons employees leave (e.g., overtime, poor work-life balance, low income)
-- Full end-to-end deployment: trained model → FastAPI backend → interactive web UI
+## Input Features the Model Uses
+👤 Age & Marital Status
+🏢 Department & Job Role
+📅 Years At Company
+💼 Total Working Years
+🔄 Number of Companies Worked
+⏰ OverTime
+😊 Job Satisfaction
+⚖️ Work-Life Balance
+📚 Training Times Last Year
+📈 Years Since Last Promotion
+💰 Monthly Income & Salary Hike %
 
-## Top Factors Driving Attrition (from Feature Importance)
-1. OverTime (Yes/No)
+## How It Works
+The model was trained on employee HR data, learning the statistical relationship between an employee's work conditions and their likelihood of leaving. It recognized that overtime, poor work-life balance, low job satisfaction, and low income consistently correlate with higher attrition risk.
+
+## What It Predicts
+Given any combination of employee details, the model instantly estimates the attrition risk percentage and classifies the employee as **Will Stay** or **Will Leave**.
+
+## Top Factors Driving Attrition (Feature Importance)
+1. OverTime
 2. Work-Life Balance
 3. Monthly Income
 4. Job Satisfaction
 
-## Tech Stack
-- **Model:** scikit-learn (Logistic Regression, Random Forest)
-- **Backend:** FastAPI
-- **Frontend:** HTML/CSS/JavaScript
-- **Training:** Google Colab (Jupyter Notebook)
-
-## How to Run Locally
-1. Clone this repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run the server: `python -m uvicorn app:app --reload`
-4. Open `http://127.0.0.1:8000` in your browser
-
-## Files
-- `app.py` — FastAPI backend serving predictions
-- `index.html` — Web interface for entering employee details
-- `attrition_model.pkl` — Trained model
-- `scaler.pkl` — Feature scaler used during training
-- `feature_columns.pkl` — Column structure used by the model
-- `categorical_columns.pkl` — List of categorical columns for encoding
-
-## Results
+## Model Performance
 | Model | Precision | Recall | F1-Score |
 |---|---|---|---|
 | Logistic Regression | 0.44 | 0.74 | 0.56 |
 | Random Forest | 0.55 | 0.55 | 0.55 |
+
+Trained and evaluated using an 80/20 train-test split with `class_weight="balanced"` to handle class imbalance.
+
+## Built With
+Python · Scikit-learn · Pandas · NumPy · Streamlit
+
+## How to Run Locally
+```bash
+git clone https://github.com/malikzubairkhokhar015-create/employee-attrition-prediction
+cd employee-attrition-prediction
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+## Files
+- `streamlit_app.py` — Streamlit web application
+- `attrition_model.pkl` — Trained Random Forest model
+- `scaler.pkl` — Feature scaler used during training
+- `feature_columns.pkl` — Column structure used by the model
+- `categorical_columns.pkl` — List of categorical columns for encoding
+- `app.py` — FastAPI backend (alternative deployment)
+- `index.html` — Web interface for FastAPI version
+
+---
+Special thanks to Sir Zafar Iqbal for the guidance throughout this project.
