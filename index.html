@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Employee Attrition Predictor</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    margin: 0;
+  }
+  .card {
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    width: 480px;
+  }
+  h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 25px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #764ba2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 20px 0 10px 0;
+    border-bottom: 2px solid #f0eafa;
+    padding-bottom: 5px;
+  }
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+  label {
+    display: block;
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 4px;
+    margin-top: 10px;
+  }
+  input, select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fafafa;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: #764ba2;
+    background: white;
+  }
+  .slider-value {
+    float: right;
+    color: #764ba2;
+    font-weight: 600;
+  }
+  input[type=range] { accent-color: #764ba2; padding: 0; }
+  button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  button:hover { opacity: 0.9; }
+  #result {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  #result .label { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .bar-bg {
+    background: #eee;
+    border-radius: 20px;
+    height: 14px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.6s ease;
+  }
+  .leave { background: #fdecea; }
+  .leave .label { color: #c0392b; }
+  .leave .bar-fill { background: #e74c3c; }
+  .stay { background: #eafaf1; }
+  .stay .label { color: #27ae60; }
+  .stay .bar-fill { background: #2ecc71; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Employee Attrition Predictor</h2>
+  <div class="subtitle">Fill in employee details to check retention risk</div>
+
+  <div class="section-title">Personal Info</div>
+  <div class="row">
+    <div><label>Age</label><input type="number" id="Age" value="30"></div>
+    <div><label>Marital Status</label>
+      <select id="MaritalStatus">
+        <option>Single</option><option>Married</option><option>Divorced</option>
+      </select>
+    </div>
+  </div>
+  <label>Distance From Home (km)</label>
+  <input type="number" id="DistanceFromHome" value="10">
+
+  <div class="section-title">Job Details</div>
+  <div class="row">
+    <div><label>Department</label>
+      <select id="Department">
+        <option>Sales</option><option>Research & Development</option><option>Human Resources</option>
+      </select>
+    </div>
+    <div><label>Job Role</label>
+      <select id="JobRole">
+        <option>Sales Executive</option><option>Research Scientist</option>
+        <option>Laboratory Technician</option><option>Manager</option>
+        <option>Healthcare Representative</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div><label>Years At Company</label><input type="number" id="YearsAtCompany" value="3"></div>
+    <div><label>Total Working Years</label><input type="number" id="TotalWorkingYears" value="5"></div>
+  </div>
+  <div class="row">
+    <div><label>Num Companies Worked</label><input type="number" id="NumCompaniesWorked" value="2"></div>
+    <div><label>OverTime</label>
+      <select id="OverTime"><option>No</option><option>Yes</option></select>
+    </div>
+  </div>
+
+  <div class="section-title">Satisfaction & Growth</div>
+  <label>Job Satisfaction <span class="slider-value" id="jsVal">3</span></label>
+  <input type="range" id="JobSatisfaction" min="1" max="4" value="3" oninput="jsVal.innerText=this.value">
+
+  <label>Work Life Balance <span class="slider-value" id="wlbVal">3</span></label>
+  <input type="range" id="WorkLifeBalance" min="1" max="4" value="3" oninput="wlbVal.innerText=this.value">
+
+  <div class="row">
+    <div><label>Training Times Last Year</label><input type="number" id="TrainingTimesLastYear" value="2"></div>
+    <div><label>Years Since Last Promotion</label><input type="number" id="YearsSinceLastPromotion" value="1"></div>
+  </div>
+
+  <div class="section-title">Compensation</div>
+  <div class="row">
+    <div><label>Monthly Income</label><input type="number" id="MonthlyIncome" value="5000"></div>
+    <div><label>Percent Salary Hike</label><input type="number" id="PercentSalaryHike" value="15"></div>
+  </div>
+
+  <button onclick="predict()">Check Attrition Risk</button>
+
+  <div id="result">
+    <div class="label" id="resultLabel"></div>
+    <div id="resultProb"></div>
+    <div class="bar-bg"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<script>
+async function predict() {
+  const data = {
+    Age: parseFloat(Age.value),
+    MonthlyIncome: parseFloat(MonthlyIncome.value),
+    DistanceFromHome: parseFloat(DistanceFromHome.value),
+    YearsAtCompany: parseFloat(YearsAtCompany.value),
+    JobSatisfaction: parseFloat(JobSatisfaction.value),
+    WorkLifeBalance: parseFloat(WorkLifeBalance.value),
+    TotalWorkingYears: parseFloat(TotalWorkingYears.value),
+    NumCompaniesWorked: parseFloat(NumCompaniesWorked.value),
+    PercentSalaryHike: parseFloat(PercentSalaryHike.value),
+    TrainingTimesLastYear: parseFloat(TrainingTimesLastYear.value),
+    YearsSinceLastPromotion: parseFloat(YearsSinceLastPromotion.value),
+    OverTime: OverTime.value,
+    Department: Department.value,
+    JobRole: JobRole.value,
+    MaritalStatus: MaritalStatus.value
+  };
+
+  const resultDiv = document.getElementById("result");
+  resultDiv.style.display = "block";
+  resultDiv.className = "";
+  document.getElementById("resultLabel").innerText = "Checking...";
+  document.getElementById("resultProb").innerText = "";
+
+  try {
+    const res = await fetch("/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    const pct = (result.attrition_probability * 100).toFixed(1);
+
+    resultDiv.className = result.prediction === "WILL LEAVE" ? "leave" : "stay";
+    document.getElementById("resultLabel").innerText = result.prediction;
+    document.getElementById("resultProb").innerText = `Attrition risk: ${pct}%`;
+    document.getElementById("barFill").style.width = pct + "%";
+  } catch (err) {
+    document.getElementById("resultLabel").innerText = "Error connecting to server.";
+  }
+}
+</script>
+
+</body>
+</html>
