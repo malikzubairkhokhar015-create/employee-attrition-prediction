@@ -60,5 +60,3 @@ streamlit run streamlit_app.py
 - `app.py` — FastAPI backend (alternative deployment)
 - `index.html` — Web interface for FastAPI version
 
----
-Special thanks to Sir Zafar Iqbal for the guidance throughout this project.
